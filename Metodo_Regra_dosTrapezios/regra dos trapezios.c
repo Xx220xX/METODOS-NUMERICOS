@@ -6,7 +6,7 @@
 
 # define red 250,0,0
 #define wi 250, 250,250 
-#define scala 900
+#define scala 1000
 /**Edite sua f(x) para obter aproximacoes de outras funcoes;**/
 
 double f(double x){
@@ -25,7 +25,7 @@ int main(){
 		
 		double maior,menor;
 		char grafic[scala][scala]={0};
-		
+
 		printf("digite o valor de a :");
 		scanf("%lf",&a);
 		printf("digite o valor de b :");
@@ -38,7 +38,6 @@ int main(){
 		fx = (double *)calloc(pontos,sizeof(double));
 		ti =(int *) calloc(pontos,sizeof(int));
 		for(i=0;i<pontos;i++){
-			
 			x[i]=a+i*h;
 			fx[i]=f(x[i]);
 			if(i==0){
@@ -76,54 +75,49 @@ void graficoPPM(char mat[][scala]) {
     # "255" is the maximum value for each color
     # The part below is image data: RGB triplets
      */
-     /*
-     a = 0;
-     b = 500;
-     
-     
-     */
     FILE * arquivo;
     int i, j ,k ;
     arquivo = fopen("Grafico.ppm", "w");
     fprintf(arquivo, "P3\n%d %d\n255\n# Pixels:\n", scala, scala);
-
     for(i = 0; i<scala;i++) {
         for(j = 0; j < scala; j++) {
         	if(mat[i][j]== 3 ){
-            	fprintf(arquivo, "%d\t%d\t%d\t\t",red);
+            			fprintf(arquivo, "%d\t%d\t%d\t\t",red);
 			}else {
-            	fprintf(arquivo, "%d\t%d\t%d\t\t",wi);
+            			fprintf(arquivo, "%d\t%d\t%d\t\t",wi);
 			}
         }    
         fprintf(arquivo, "\n");
     }
-  
-    
-   
     fclose(arquivo);
 }
-
+double norma(double z, double y){
+	return pow(z*z+y*y,0.5);
+}
 void graficANAlise(char *gp,double *x, double *fx,double maior, double menor,int pontos,double deltaz,double a){
 	int i =0;
 	
-	double t,az,ay,cy,cz,y ,z,delta = maior-menor;
+	double t,az,ay,cy,cz,y ,z,delta = maior-menor, normap;
 // ZoY
 	for(i=0;i<pontos;i++){
 		y = (maior - fx[i])*(scala-1)/(delta);
 		z =  (a+x[i])*(scala-1)/(deltaz);
 		gp[(int)(((int)y)*scala+((int)z))]=3;
-		if(i>0 && 0){
+		if(i>0 ){
 			az= (a+x[i-1])*(scala-1)/(deltaz);
 			ay = (maior - fx[i-1])*(scala-1)/(delta);
 			cz =  z - az;
 			cy =  y - ay;
-			for(t=0;;t+=0.1){
-				if(pow((pow(z-(az+cz*t),2)+pow(y-(ay+cy*t),2)),0.5)<2){
-					break;
-				}	
-				gp[(int)((ay+cy*t)*scala+(az+cz*t))]=3;
+			if((int)cz != (int) z){
+			normap = (z-az)/cz;
+			}else {
+				normap = (y-ay)/cy;
+			}
+			for(t=0;t<normap;t+=0.001){
+					gp[(int)((int)(ay+cy*t)*scala+(int)(az+cz*t))]=3;
 			}
 		}
+		
 	}
 	/*
 	maior -menor = delta fx
