@@ -1,1 +1,1 @@
-metodo de lagrande e de newton
+metodo de lagrange e de newton
