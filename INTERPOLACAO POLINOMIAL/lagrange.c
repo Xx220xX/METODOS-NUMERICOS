@@ -58,10 +58,10 @@ double getNumber(FILE *Iobuf) {
         c = fgetc(Iobuf);
         if (c == '/' || c == '#') {
         	if(achei )break;
-            while (!feof(Iobuf) && c!= '\n' && c!= '#' ){
-            	c=fgetc(Iobuf) ;
-            }
-            continue;
+          do{
+           c =fgetc(Iobuf);
+          }while (!feof(Iobuf) && c!= '\n' && c!= '#' );
+           continue;
         }
         if( c=='.'  && achei && !edecimal){
             edecimal =1;
