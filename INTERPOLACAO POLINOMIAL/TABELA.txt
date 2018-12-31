@@ -1,0 +1,8 @@
+// o insira o numero de pontos que deseja interpolar
+// se for 3 pontos para x informa 3, nem mais nem menos
+// a resposta saira neste msm arquivo
+
+pontos = 3
+x = 2  3  4
+y = 5  10 17 
+
