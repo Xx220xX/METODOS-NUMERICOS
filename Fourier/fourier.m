@@ -3,8 +3,10 @@ clear;
 clc;
 
 e = exp(1);
+
 function  y = sen(x) y = sin(x); endfunction
-  function y = u(x) 
+function y = p(n) y = -1; if mod(n,2) == 0 y = 1;endif endfunction
+    function y = u(x) 
     y = [];
     tamanho = length(x);
     for i=1:tamanho
@@ -16,6 +18,7 @@ function  y = sen(x) y = sin(x); endfunction
   str = input ("insira a funcao f(x) periodica: ","s") ;
   L = input("digite L (metade do periodo): ");
   str = ['@(x)' str]; 
+   titulo = str;
   funcaoAnalitica= str2func(str);#criando funcao de f(x)
   
    str = input ("insira a equacao do A0: ","s"); #inserindo  A0
@@ -54,7 +57,7 @@ function  y = sen(x) y = sin(x); endfunction
     str = input(":","s");
     str = ['@()' str];
     bk = str2func(str);
-    bk = ak();
+    bk = bk();
     bnParticAnsw= [bnParticAnsw bk];
   end
   
@@ -100,6 +103,7 @@ function  y = sen(x) y = sin(x); endfunction
       resp = 0;
       var_x =0;
       a_n = 0;
+      
       for j = 1:k
         var_x = x(j);
         resp =  termos.a0/2;
@@ -119,7 +123,11 @@ function  y = sen(x) y = sin(x); endfunction
       resp = 0;
       var_x =0;
       a_n = 0;
+      bar_max = 1/k;
+      bar_at = 0;
+       wwait =  waitbar(bar_at,sprintf("pfv espere calculando pontos para plotar"));
       for j = 1:k
+        waitbar(bar_at,wwait);
         var_x = X(j);
         resp =  termos.a0/2;
         for i=1:1:n_max
@@ -128,8 +136,10 @@ function  y = sen(x) y = sin(x); endfunction
            resp = resp + a_n*cos(i*pi*var_x/L);
           resp = resp + b_n*sin(i*pi*var_x/L);
         end
+        bar_at = j*bar_max;
         y=[y resp];
       end
+      close(wwait);
     endfunction
     
     function y = Finit(x,funcx)
@@ -153,14 +163,22 @@ function  y = sen(x) y = sin(x); endfunction
     
     an =[];
     bn = [];
+     bar_max = 1/n_max;
+      bar_at = 0;
+   wwait =  waitbar(bar_at,sprintf("pfv espere calculando termos an e bn "));
     for n =1:1:n_max
+      waitbar(bar_at,wwait);
       bn = [bn Bn(n,Termos.bnParticular,Termos.bnParticAnsw,Termos.funcBn)];
       an = [an An(n,Termos.anParticular,Termos.anParticAnsw,Termos.funcAn)];
+      bar_at = bar_at + bar_max;
     end
+    close(wwait);
     y = fourierOTM(x,L,n,Termos,an,bn);
     plot(x,y,x,yf);
-    
-    
+   
+    title(titulo);  
+    clear;
+    disp('fim');
     %{
     for n = 75:2:400
       y = fourierOTM(x,L,n,Termos,an,bn);
@@ -198,10 +216,59 @@ function  y = sen(x) y = sin(x); endfunction
     []
     -(-1)^n/n
     []
-    50
+    10
     
     
+    u(x)*sen(x)^2
+    pi
+    1/2
+    0
+    []
+    (2/(pi*n))*((-1)^n-1)/(n^2-4)
+    [2]
+    0
+    10
     
+    x+x^2
+    1
+    2/3
+    4*(-1)^n/(n^2*pi^2)
+    []
+    -2*(-1)^n/(n*pi)
+    []
+    30
+    
+    u(x)*sen(x)+u(-x)*cos(x)
+    pi
+    2/pi
+     1/(2*pi)*((1+(-1)^n)/(n+1) + (1+(-1)^n)/(1 - n))
+    [1]
+    1/2    
+     1/(2*pi)*((-1-(-1)^n)/(n+1) + (-1+(-1)^n)/(n -1))
+    [1]
+    1/2
+    10
+    
+     u(x)*sen(x)+u(-x)*cos(x)
+    pi
+    2/pi
+    (1-p(n))/(pi*(1-n^2))
+    [1]
+    1/2    
+    1/(pi*n)*((p(n+1)-1)/(n+1) + (p(n-1)-1)/(n-1) )
+    [1]
+    1/2
+    130
+    
+    3 - g
+    1+x
+    1
+    2
+    0
+    []
+    -2*p(n)/(n*pi)
+    []
+    30
     
     
     
