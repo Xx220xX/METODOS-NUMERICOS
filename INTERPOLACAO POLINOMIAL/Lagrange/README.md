@@ -35,6 +35,7 @@ Onde :
 
 ### [exemplo numerico](exemplo.md)
 
+### [codigo em c](code.md)
 
 
 
