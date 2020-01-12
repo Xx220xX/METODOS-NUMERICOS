@@ -68,7 +68,7 @@ Polinomio somaPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
     }
     ans = novoPolinomio(b.coeficientes,b.len);
     for (i=0;i<a.len;i++)
-       ans.coeficientes[i] += a.coeficientes[i] a.coeficientes[i]*b.coeficientes[j];
+       ans.coeficientes[i] += a.coeficientes[i];
     if (apaga_a)
        apagarPolinomio(a);
     if (apaga_b)
@@ -116,7 +116,7 @@ Os techos de codigo a seguir correspodem a função **interpolarLagrage**
 * cabeçalho
 
   ```C
-  Polinomio  interpolarLagrage(double *x,double *y,int n);
+  Polinomio  interpolarLagrange(double *x,double *y,int n);
   ```
 
   > suponharemos que os vetores **x** e **y** possuam tamanho maior ou igual a **n**, **n-1** corresponde ao grau do polinomio a ser encontrado.
@@ -216,7 +216,7 @@ Polinomio somaPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
     }
     ans = novoPolinomio(b.coeficientes,b.len);
     for (i=0;i<a.len;i++)
-       ans.coeficientes[i] += a.coeficientes[i] a.coeficientes[i]*b.coeficientes[j];
+       ans.coeficientes[i] += a.coeficientes[i];
     if (apaga_a)
        apagarPolinomio(a);
     if (apaga_b)
@@ -241,7 +241,7 @@ void printPolinomio(Polinomio p){
      printf(" + %lf x^%d",p.coeficientes[i],i);
 }
 
-Polinomio  interpolarLagrage(double *x,double *y,int n){
+Polinomio  interpolarLagrange(double *x,double *y,int n){
   int i,j;
   Polinomio P = {0},termo,lij=novoPolinomio(0,2);
 
