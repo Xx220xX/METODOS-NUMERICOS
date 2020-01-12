@@ -133,9 +133,9 @@ Os techos de codigo a seguir correspodem a função **interpolarLagrage**
   >
   > A variavel **P** é o polinomio que encontraremos P(x).
   > 
-  > A variável **termo** será o polinomio gerado por cada <img alight ="center" src="https://latex.codecogs.com/svg.latex?\Large&space;f(x_i)\ast L_i(x)"/> .
->
-> E por fim a variavel lij é uma auxiliar para achar os polinomios <img alight ="center" src="https://latex.codecogs.com/svg.latex?\Large&space;L_i(x)" />
+  > A variável **termo** será o polinomio gerado por cada <img src="https://latex.codecogs.com/svg.latex?\Large&space;f(x_i)\ast%20L_i(x)"/> .
+
+E por fim a variavel lij é uma auxiliar para achar os polinomios <img alight ="center" src="https://latex.codecogs.com/svg.latex?\Large&space;L_i(x)" />
 
 * Laços iterativos
 
