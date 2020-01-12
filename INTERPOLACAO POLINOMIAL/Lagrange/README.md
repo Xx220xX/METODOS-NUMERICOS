@@ -33,7 +33,7 @@ Onde :
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;L_i(x)=\prod_{j=0,j\neq%20i}^{n-1}\left(\frac{x-x_j}{x_i-x_j}\right)"/>
 
 
-### [exemplo numerico](exemplo/lagrange.md)
+### [exemplo numerico](exemplo.md)
 
 
 
