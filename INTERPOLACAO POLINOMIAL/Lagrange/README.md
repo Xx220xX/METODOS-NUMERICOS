@@ -37,6 +37,11 @@ Onde :
 
 ### [codigo em c](code.md)
 
+# Aproximações de funções conhecidas
+ * [Exponencial](exp.md)
+ * [Senoidal](sen.md)
+ * [Tangente hiperbolica](tanh.md)
+
 
 
 
