@@ -41,7 +41,7 @@ Agora que possuimos  um polinomio iremos criar as funções de multiplicação e
 
 ```C
 Polinomio multPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
-    Polinomio ans = novoPolinomio(0,a.len+b.len);
+    Polinomio ans = novoPolinomio(0,a.len+b.len-1);
     int i,j;
     for (i=0;i<a.len;i++)
        for (j=0;j<b.len;j++)
@@ -50,6 +50,7 @@ Polinomio multPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
        apagarPolinomio(a);
     if (apaga_b)
        apagarPolinomio(b);
+  return ans;
 }
 ```
 > A função recebe dois polinomios e dois inteiros.
@@ -73,6 +74,7 @@ Polinomio somaPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
        apagarPolinomio(a);
     if (apaga_b)
        apagarPolinomio(b);
+    return ans;
 }
 ```
 > Antes de realizar a soma é verificado qual polinomio tem maior grau, deixando sempre este como o polinomio **b**
@@ -99,7 +101,7 @@ E por fim podemos tambem printar  um polinomio.
    int i;
    if (p.len>0)
       printf("%lf x^%d",p.coeficientes[p.len-1],p.len-1);
-   for (i=p.len-2;i>=0;i++)
+   for (i=p.len-2;i>=0;i--)
      printf(" + %lf x^%d",p.coeficientes[i],i);
 }
 ```
@@ -181,8 +183,9 @@ typedef struct {
 }Polinomio;
 
 Polinomio novoPolinomio(const double * v,int size){
-    Polinomio ans= {0,size};
+    Polinomio ans= {0};
     ans.coeficientes = (double *)calloc(size,sizeof(double));
+    ans.len = size;
     if (v)
         for(size=size-1;size>=0;size--)
             ans.coeficientes[size] = v[size];
@@ -195,7 +198,7 @@ void apagarPolinomio(Polinomio p){
     p.len = 0;
 }
 Polinomio multPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
-    Polinomio ans = novoPolinomio(0,a.len+b.len);
+    Polinomio ans = novoPolinomio(0,a.len+b.len-1);
     int i,j;
     for (i=0;i<a.len;i++)
        for (j=0;j<b.len;j++)
@@ -204,6 +207,7 @@ Polinomio multPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
        apagarPolinomio(a);
     if (apaga_b)
        apagarPolinomio(b);
+    return ans;
 }
 
 Polinomio somaPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
@@ -221,6 +225,7 @@ Polinomio somaPolinomio(Polinomio a,Polinomio b,int apaga_a,int apaga_b){
        apagarPolinomio(a);
     if (apaga_b)
        apagarPolinomio(b);
+    return ans;
 }
 
 double evalPolinomio(Polinomio p,double x){
@@ -235,9 +240,10 @@ double evalPolinomio(Polinomio p,double x){
 
 void printPolinomio(Polinomio p){
    int i;
+   printf("grau %d\n",p.len-1);
    if (p.len>0)
       printf("%lf x^%d",p.coeficientes[p.len-1],p.len-1);
-   for (i=p.len-2;i>=0;i++)
+   for (i=p.len-2;i>=0;i--)
      printf(" + %lf x^%d",p.coeficientes[i],i);
 }
 
@@ -247,8 +253,8 @@ Polinomio  interpolarLagrange(double *x,double *y,int n){
 
   for(i=0;i<n;i++){
      termo = novoPolinomio(0,1);
-     termo.coeficiente[0] = y[i];
-     for(j=0;i<n;j++){
+     termo.coeficientes[0] = y[i];
+     for(j=0;j<n;j++){
         if(i==j) continue;
         lij.coeficientes[0] = -x[j]/(x[i]-x[j]); 
         lij.coeficientes[1] = 1/(x[i]-x[j]);
@@ -257,6 +263,7 @@ Polinomio  interpolarLagrange(double *x,double *y,int n){
      P = somaPolinomio(P,termo,1,1);
    }
    apagarPolinomio(lij);
+   
    return P;
 }
 ```
